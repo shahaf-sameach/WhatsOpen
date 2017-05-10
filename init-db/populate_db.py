@@ -4,13 +4,42 @@ from api import nearbysearch, place_details
 import sys
 
 if __name__ == "__main__" :
-  response = nearbysearch(-33.8670, 151.1957)
+  Ashdod = [31.801447, 34.643497]
+  Bat_Yam = [32.017136, 34.745441]
+  Tel_Aviv = [32.109333, 34.855499]
+  Haifa = [32.794044, 34.989571]
+  Herzliya = [32.166313, 34.843311]
+  Rehovot = [31.894756, 34.809322]
+  Jerusalem = [31.771959, 35.217018]
+  
+  # response = nearbysearch(*Herzliya)
 
-  with db_session:
-    for res in response['results']:
-      p = Place(place_id = res['place_id'])
+  # with db_session:
+  #   for res in response['results']:
+  #     lat = res['geometry']['location']['lat']
+  #     lng = res['geometry']['location']['lng']
+  #     place_id = res['place_id']
+  #     p = Place.get(place_id=place_id)
+  #     if p is None:
+  #       p = Place(place_id = place_id, lat=lat, lng=lng)
 
-  #sys.exit()
+  # with db_session:
+  #   places = select(p for p in Place if p.nearby_done == False)[:]
+  #   print "working on %s places" %len(places)
+  #   for place in places:
+  #     response = nearbysearch(place.lat, place.lng)
+  #     for res in response['results']:
+  #       lat = res['geometry']['location']['lat']
+  #       lng = res['geometry']['location']['lng']
+  #       place_id = res['place_id']
+  #       p = Place.get(place_id=place_id)
+  #       if p is None:
+  #         p = Place(place_id = place_id, lat=lat, lng=lng)
+
+  #     place.set(nearby_done=True)
+
+
+  # sys.exit()
 
   with db_session:
     places = select(p for p in Place if p.done == False)[:]
@@ -23,10 +52,9 @@ if __name__ == "__main__" :
       city = None
       for address in res['address_components']:
         if 'locality' in address['types']:
-          try:
+          city = City.get(name = address['short_name'])
+          if city is None:
             city = City(name = address['short_name'])
-          except :
-            city = City.get(name = address['short_name'])
 
       addrss = res['formatted_address']
       lat = res['geometry']['location']['lat']
@@ -37,10 +65,9 @@ if __name__ == "__main__" :
 
       b = Bussiness(name=name, lat=lat, lng=lng, place_id=place_id, address=addrss, city=city, url=url)
       for category in res['types']:
-        try :
+        c = Category.get(name=category)
+        if c is None:
           c = Category(name=category)
-        except :
-          c = Category.get(name=category)
         
         bc = Bussiness_Category(bussiness=b, category=c)
 

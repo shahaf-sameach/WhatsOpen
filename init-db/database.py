@@ -5,7 +5,10 @@ db = Database(MYSQL['type'], host=MYSQL['host'], user=MYSQL['user'], db=MYSQL['d
 
 class Place(db.Entity):
   place_id = PrimaryKey(str)
+  lat = Required(float)
+  lng = Required(float)
   done = Required(bool, default=False)
+  nearby_done = Required(bool, default=False)
 
 class City(db.Entity):
   id = PrimaryKey(int, auto=True)
