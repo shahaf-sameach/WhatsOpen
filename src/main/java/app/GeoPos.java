@@ -25,6 +25,11 @@ public class GeoPos {
         this.lng = lng;
     }
 
+    @Override
+    public String toString() {
+        return "(" + this.lat + "," + this.lng + ")";
+    }
+
     private GeoPos degToRad(){
         double radLat = this.lat * (Math.PI / 180);
         double radlng = this.lng * (Math.PI / 180);
@@ -36,5 +41,6 @@ public class GeoPos {
         double deglng = (180 * this.lng) / Math.PI;
         return new GeoPos(degLat, deglng);
     }
+
 
 }
