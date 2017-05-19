@@ -12,7 +12,7 @@ public class GeoApi {
     private GeoApiContext context = null;
 
     public GeoApi(){
-        this.context = new GeoApiContext().setApiKey("AIzaSyBSb9j5Dl8FnAdNraCMkN-l0rKsKrHsaWg");
+        this.context = new GeoApiContext().setApiKey("AIzaSyBoZvKz08_259aboWBJsDdX0QoTNO5QN6U");
     }
 
     public GeoPos getGeoPos(String address){

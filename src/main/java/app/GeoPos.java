@@ -30,6 +30,24 @@ public class GeoPos {
         return "(" + this.lat + "," + this.lng + ")";
     }
 
+
+    public double distance(GeoPos pos) {
+
+        final int R = 6371; // Radius of the earth
+
+        double latDistance = Math.toRadians(pos.getLat() - this.lat);
+        double lonDistance = Math.toRadians(pos.getLng() - this.lng);
+        double a = Math.sin(latDistance / 2) * Math.sin(latDistance / 2)
+                + Math.cos(Math.toRadians(this.lat)) * Math.cos(Math.toRadians(pos.getLat()))
+                * Math.sin(lonDistance / 2) * Math.sin(lonDistance / 2);
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
+        double distance = R * c * 1000; // convert to meters
+
+        distance = Math.pow(distance, 2);
+
+        return Math.sqrt(distance);
+    }
+
     private GeoPos degToRad(){
         double radLat = this.lat * (Math.PI / 180);
         double radlng = this.lng * (Math.PI / 180);
@@ -41,6 +59,8 @@ public class GeoPos {
         double deglng = (180 * this.lng) / Math.PI;
         return new GeoPos(degLat, deglng);
     }
+
+
 
 
 }
