@@ -31,6 +31,7 @@ class Bussiness(db.Entity):
   url = Optional(str)
   city = Required(City)
   bussiness_categories = Set('Bussiness_Category')
+  reviews = Set('Review')
   sundayes = Set('Sunday')
   mondayes = Set('Monday')
   tuesdayes = Set('Tuesday')
@@ -78,6 +79,19 @@ class Saturday(db.Entity):
   bussiness = PrimaryKey(Bussiness)
   time_open = Optional(str, default='1000')
   time_close = Optional(str, default='1800')
+
+class User(db.Entity):
+  id = PrimaryKey(int, auto=True)
+  username = Required(str)
+  password = Required(str)
+  reviews = Set('Review')
+
+class Review(db.Entity):
+  id = PrimaryKey(int, auto=True)
+  rank = Optional(int, default=0)
+  description = Optional(str)
+  user = Required(User)
+  bussiness = Required(Bussiness)
 
 
 db.generate_mapping(create_tables=True)

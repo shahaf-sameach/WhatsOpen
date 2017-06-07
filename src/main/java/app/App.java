@@ -24,7 +24,7 @@ public class App {
         categories.add("food");
         categories.add("atm");
         List<Business> businesses = b.get(categories, box.getMinLat() , box.getMaxLat() , box.getMinLng() , box.getMaxLng());
-        System.out.println("found " + businesses.size() + "business");
+        System.out.println("found " + businesses.size() + " business");
         PriorityQueue<Business> queue = new PriorityQueue<Business>();
 
         for(Business bb : businesses){

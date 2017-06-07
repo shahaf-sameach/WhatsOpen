@@ -1,12 +1,8 @@
 package app.db.dao;
 
-import app.BoundingBox;
 import app.db.entity.Business;
-import com.sun.deploy.util.StringUtils;
-
 import java.sql.*;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 public class BussinessDao {
