@@ -9,13 +9,10 @@ import com.google.maps.model.GeocodingResult;
 import java.io.IOException;
 
 public class GeoApi {
-    private GeoApiContext context = null;
 
-    public GeoApi(){
-        this.context = new GeoApiContext().setApiKey("AIzaSyBoZvKz08_259aboWBJsDdX0QoTNO5QN6U");
-    }
+    public static GeoPos getGeoPos(String address){
+        GeoApiContext context =  new GeoApiContext().setApiKey("AIzaSyBoZvKz08_259aboWBJsDdX0QoTNO5QN6U");
 
-    public GeoPos getGeoPos(String address){
         GeocodingResult[] results = new GeocodingResult[0];
         try {
             results = GeocodingApi.geocode(context, address).await();

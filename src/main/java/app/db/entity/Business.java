@@ -65,6 +65,24 @@ public class Business implements Comparable<Business> {
         return this.distance;
     }
 
+    public double getRank() { return 5.5; }
+
+    public int getReviewers() { return 10; }
+
+    public String toString() {
+        String str = String.format("%.1f",this.getDistance() / 1000) + "km " + padString(this.getName(), 20) + "  " + padString(this.getAddress(), 50)  + " " + this.getRank() + "/" + this.getReviewers();
+        return str;
+    }
+
+    private String padString(String str, int leng) {
+        if (str.length() > leng)
+            return str.substring(0,leng - 3) + "...";
+
+        for (int i = str.length(); i <= leng; i++)
+            str += " ";
+        return str;
+    }
+
     public int compareTo(Business bis) {
         if (this.distance > bis.distance)
             return 1;

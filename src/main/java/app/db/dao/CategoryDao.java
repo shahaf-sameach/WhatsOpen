@@ -1,5 +1,7 @@
 package app.db.dao;
 
+import app.db.entity.Category;
+
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -10,11 +12,11 @@ import java.util.List;
 public class CategoryDao {
     private Connection conn = null;
 
-    public List<String> getAll() throws Exception {
+    public List<Category> getAll() throws Exception {
         String url = "jdbc:mysql://localhost/whatsopen";
         String userName = "whatsopen";
         String password = "1234";
-        String query = "select name from category";
+        String query = "select id, name from category";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -22,14 +24,17 @@ public class CategoryDao {
         Statement st = conn.createStatement();
         ResultSet rs = st.executeQuery(query);
 
-        List<String> categories = new ArrayList<String>();
+        List<Category> categories = new ArrayList<Category>();
         while(rs.next()){
-            String record = rs.getString("name");
-            categories.add(record);
+            String name = rs.getString("name");
+            int id = rs.getInt("id");
+            categories.add(new Category(id, name));
         }
 
         rs.close();
         conn.close();
         return categories;
     }
+
+
 }
