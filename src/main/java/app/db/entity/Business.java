@@ -9,17 +9,26 @@ public class Business implements Comparable<Business> {
     private String description;
     private GeoPos pos;
     private double distance;
+    private String city;
+    private String url;
+    private double rank;
+    private int reviewers;
 
     public Business(){}
 
-    public Business(int id, String name, String address, String description, double lat, double lng) {
+    public Business(int id, String name, String address, String description, double lat, double lng, String url, String city, double rank, int count) {
         this.id = id;
         this.name = name;
         this.address = address;
         this.description = description;
         this.pos = new GeoPos(lat, lng);
+        this.url = url;
+        this.city = city;
+        this.rank = rank;
+        this.reviewers = count;
         this.distance = 0;
     }
+
 
     public int getId() {
         return id;
@@ -49,6 +58,16 @@ public class Business implements Comparable<Business> {
         return description;
     }
 
+    public GeoPos getPos() { return  pos;}
+
+    public String getCity() {
+        return city;
+    }
+
+    public String getUrl() {
+        return url;
+    }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -65,12 +84,12 @@ public class Business implements Comparable<Business> {
         return this.distance;
     }
 
-    public double getRank() { return 5.5; }
+    public double getRank() { return this.rank; }
 
-    public int getReviewers() { return 10; }
+    public int getReviewers() { return this.reviewers; }
 
     public String toString() {
-        String str = String.format("%.1f",this.getDistance() / 1000) + "km " + padString(this.getName(), 20) + "  " + padString(this.getAddress(), 50)  + " " + this.getRank() + "/" + this.getReviewers();
+        String str = String.format("%.1f",this.getDistance() / 1000) + "km " + padString(this.getName(), 20) + "  " + padString(this.getAddress(), 50)  + " " + String.format("%.1f",this.getRank()) + "/" + this.getReviewers();
         return str;
     }
 

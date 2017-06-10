@@ -43,10 +43,14 @@ public class BussinessDao {
             builder.append("?,");
         }
 
-        String query = "select b.id, b.name, b.address, b.description, b.lat, b.lng from bussiness b " +
-                       "LEFT join bussiness_category on bussiness_category.bussiness = b.id " +
-                       "LEFT join category on category.id = bussiness_category.category " +
-                       "where category.id in (" + builder.deleteCharAt( builder.length() -1 ).toString() + ") and b.lat between ? and ? and b.lng between ? and ?";
+        String query = "select b.id, b.name, b.address, b.description, b.lat, b.lng, b.url, city.name as city, avg(rank) as rank, count(rank) as reviewers " +
+                       "from bussiness b " +
+                       "LEFT JOIN bussiness_category on bussiness_category.bussiness = b.id " +
+                       "LEFT JOIN category on category.id = bussiness_category.category " +
+                       "LEFT JOIN city on city.id = b.city " +
+                       "LEFT JOIN review on review.bussiness = b.id " +
+                       "where category.id in (" + builder.deleteCharAt( builder.length() -1 ).toString() + ") and b.lat between ? and ? and b.lng between ? and ? and review.bussiness = b.id " +
+                       "group by review.bussiness";
 
         Class.forName("com.mysql.cj.jdbc.Driver");
 
@@ -72,13 +76,18 @@ public class BussinessDao {
                                         rs.getString("address"),
                                         rs.getString("description"),
                                         rs.getDouble("lat"),
-                                        rs.getDouble("lng")));
+                                        rs.getDouble("lng"),
+                                        rs.getString("url"),
+                                        rs.getString("city"),
+                                        rs.getDouble("rank"),
+                                        rs.getInt("reviewers")));
         }
 
         rs.close();
         conn.close();
         return businesses;
     }
+
 
 //    public static void main(String[] args) throws Exception {
 //        BussinessDao b = new BussinessDao();

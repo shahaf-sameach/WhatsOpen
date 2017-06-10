@@ -7,11 +7,9 @@ import app.db.dao.BussinessDao;
 import app.db.dao.CategoryDao;
 import app.db.entity.Business;
 import app.db.entity.Category;
-import javafx.event.EventHandler;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
@@ -23,6 +21,7 @@ public class MainViewController {
     public Button searchButton;
     public ListView<Business> mainList;
     public ListView<Category> categoriesList;
+    private BusinessView businessView = new BusinessView();
 
     public void initialize() {
         topLable.setText("Hello " + "username");
@@ -40,6 +39,7 @@ public class MainViewController {
     public void searchButtonclicked(){
         searchButton.setDisable(true);
         statusLable.setText("Searching...");
+        mainList.getItems().clear();
         try {
             String address = searchField.getText();
             address = "המאבק 61 גבעתיים";
@@ -60,7 +60,6 @@ public class MainViewController {
 
             while (!queue.isEmpty()) {
                 Business obj = queue.poll();
-                String str = String.format("%.1f",obj.getDistance() / 1000) + "km " + obj.getName() + " - " + obj.getAddress() + " " + obj.getRank() + "/" + obj.getReviewers();
                 mainList.getItems().add(obj);
             }
             statusLable.setText("Ready");
@@ -75,7 +74,12 @@ public class MainViewController {
     public void mainListClicked(MouseEvent click){
         if (click.getClickCount() == 2) {
             Business currentItemSelected = mainList.getSelectionModel().getSelectedItem();
-            System.out.println(currentItemSelected.getId());
+            try {
+                businessView.display(currentItemSelected);
+            } catch (Exception ex) {
+                ex.printStackTrace();
+            }
+
         }
     }
 
