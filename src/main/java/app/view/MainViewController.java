@@ -46,9 +46,8 @@ public class MainViewController {
             GeoPos pos = GeoApi.getGeoPos(address);
             int radius = 10;
             BoundingBox box = new BoundingBox(pos, radius);
-            BussinessDao b = new BussinessDao();
             List<Category> categories = categoriesList.getSelectionModel().getSelectedItems();
-            List<Business> businesses = b.get(categories, box.getMinLat(), box.getMaxLat(), box.getMinLng(), box.getMaxLng());
+            List<Business> businesses = BussinessDao.get(categories, box.getMinLat(), box.getMaxLat(), box.getMinLng(), box.getMaxLng());
             System.out.println("found " + businesses.size() + " business");
             PriorityQueue<Business> queue = new PriorityQueue<Business>();
 

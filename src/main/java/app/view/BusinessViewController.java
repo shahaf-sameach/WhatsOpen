@@ -38,8 +38,9 @@ public class BusinessViewController {
         cityLabel.setText(business.getCity());
         urlLink.setText(business.getUrl());
         rankLabel.setText(String.format("%.1f",business.getRank()) + " out of " + business.getReviewers() + " reviewers");
-        getCategories(business.getId());
-        List<Review> reviews = getReviews(business.getId());
+        categoryList.getItems().setAll(CategoryDao.get(business.getId()));
+
+        List<Review> reviews = ReviewDao.getByBusiness(business.getId());
         for(Review review : reviews){
             VBox vbox = new VBox();
             HBox hBox = new HBox();
@@ -71,25 +72,4 @@ public class BusinessViewController {
         urlLink.setVisited(true);
     }
 
-    private void getCategories(int business_id){
-        try {
-            CategoryDao c = new CategoryDao();
-            List<Category> categories = c.get(business_id);
-            categoryList.getItems().setAll(categories);
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
-    }
-
-    private List<Review> getReviews(int business_id){
-        List<Review> reviews = new ArrayList<Review>();
-        try {
-            ReviewDao r = new ReviewDao();
-            reviews = r.getByBusiness(business_id);
-            return reviews;
-        } catch (Exception ex){
-            ex.printStackTrace();
-        }
-        return reviews;
-    }
 }

@@ -8,12 +8,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryDao {
-    private Connection conn = null;
 
-    public List<Category> getAll() {
+    public static List<Category> getAll() {
         List<Category> categories = new ArrayList<Category>();
         try {
-            conn = DbHandler.connect();
+            Connection conn = DbHandler.connect();
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select id, name from category");
 
@@ -29,7 +28,7 @@ public class CategoryDao {
         return categories;
     }
 
-    public List<Category> get(int business_id) {
+    public static List<Category> get(int business_id) {
         List<Category> categories = new ArrayList<Category>();
         try {
             String query = "select id, name " +
@@ -37,7 +36,7 @@ public class CategoryDao {
                     "where category.id = bussiness_category.category and bussiness_category.bussiness = ?";
 
 
-            conn = DbHandler.connect();
+            Connection conn = DbHandler.connect();
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, business_id);
             System.out.println(st.toString());

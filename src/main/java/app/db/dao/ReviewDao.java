@@ -8,9 +8,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ReviewDao {
-    private Connection conn = null;
 
-    public List<Review> getByBusiness(int business_id) {
+    public static List<Review> getByBusiness(int business_id) {
         List<Review> reviews = new ArrayList<Review>();
         try {
             String query = "select review.id, description, rank, username " +
@@ -18,7 +17,7 @@ public class ReviewDao {
                     "where review.bussiness = ? and review.user = user.id";
 
 
-            conn = DbHandler.connect();
+            Connection conn = DbHandler.connect();
             PreparedStatement st = conn.prepareStatement(query);
             st.setInt(1, business_id);
 

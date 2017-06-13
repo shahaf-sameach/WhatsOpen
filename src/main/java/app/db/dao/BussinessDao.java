@@ -9,12 +9,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class BussinessDao {
-    private Connection conn = null;
 
-    public List<String> getAll()  {
+    public static List<String> getAll()  {
         List<String> categories = new ArrayList<String>();
         try {
-            conn = DbHandler.connect();
+            Connection conn = DbHandler.connect();
 
             Statement st = conn.createStatement();
             ResultSet rs = st.executeQuery("select name from bussiness");
@@ -33,7 +32,7 @@ public class BussinessDao {
         return categories;
     }
 
-    public List<Business> get(List<Category> categories, double minLat, double maxLat, double minLng, double maxLng) {
+    public static List<Business> get(List<Category> categories, double minLat, double maxLat, double minLng, double maxLng) {
         List<Business> businesses = new ArrayList<Business>();
 
         try {
@@ -52,7 +51,7 @@ public class BussinessDao {
                     "where category.id in (" + builder.deleteCharAt(builder.length() - 1).toString() + ") and b.lat between ? and ? and b.lng between ? and ? and review.bussiness = b.id " +
                     "group by review.bussiness";
 
-            conn = DbHandler.connect();
+            Connection conn = DbHandler.connect();
             PreparedStatement st = conn.prepareStatement(query);
 
             int index = 1;
