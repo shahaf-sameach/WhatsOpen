@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Separator?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="576.0" prefWidth="720.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.SearchController">
+   <top>
+      <VBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="topLable" text="label">
+               <VBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </VBox.margin></Label>
+            <Separator prefWidth="200.0" />
+            <VBox>
+               <children>
+                  <HBox>
+                     <children>
+                        <Label text="Address">
+                           <HBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="12.0" />
+                           </HBox.margin>
+                        </Label>
+                        <TextField fx:id="searchField" prefHeight="27.0" prefWidth="460.0">
+                           <HBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </TextField>
+                        <Region HBox.hgrow="ALWAYS" />
+                        <ComboBox fx:id="radiusComboBox" prefHeight="27.0" prefWidth="89.0" promptText="10km">
+                           <HBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                        <Button fx:id="searchButton" mnemonicParsing="false" onAction="#searchButtonclicked" text="Search">
+                           <HBox.margin>
+                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                           </HBox.margin>
+                           <padding>
+                              <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+                  <TextArea fx:id="summaryTextArea" prefHeight="0.0" prefWidth="681.0" wrapText="true">
+                     <VBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </VBox.margin>
+                  </TextArea>
+               </children>
+            </VBox>
+         </children>
+      </VBox>
+   </top>
+   <bottom>
+      <HBox BorderPane.alignment="CENTER">
+         <children>
+            <Label fx:id="statusLable" prefHeight="21.0" prefWidth="709.0">
+               <HBox.margin>
+                  <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+               </HBox.margin></Label>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <ListView fx:id="mainList" onMouseClicked="#mainListClicked" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin></ListView>
+   </center>
+   <left>
+      <ListView fx:id="categoriesList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin></ListView>
+   </left>
+</BorderPane>

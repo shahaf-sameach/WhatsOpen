@@ -9,8 +9,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.BusinessViewController">
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1" fx:controller="app.view.BusinessController">
    <top>
       <HBox BorderPane.alignment="CENTER">
          <children>
@@ -56,7 +55,7 @@
                               <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                            </HBox.margin>
                         </Label>
-                        <Hyperlink fx:id="urlLink" onAction="#urlLinkClicked" text="Hyperlink">
+                        <Hyperlink fx:id="urlLink" text="Hyperlink">
                            <HBox.margin>
                               <Insets bottom="8.0" left="8.0" right="8.0" top="5.0" />
                            </HBox.margin>
@@ -93,30 +92,14 @@
                   </HBox>
                </children>
             </VBox>
-            <VBox prefHeight="170.0" prefWidth="428.0">
-               <children>
-                  <Label text="you wrote:" />
-                  <HBox prefHeight="100.0" prefWidth="260.0">
-                     <children>
-                        <Label text="5">
-                           <HBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </HBox.margin>
-                        </Label>
-                        <Label alignment="TOP_LEFT" prefHeight="85.0" prefWidth="201.0" text="grmktgkrbntkn k knkn kgn k nkrnkgn knbkgn krgn knrl" wrapText="true">
-                           <HBox.margin>
-                              <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
-                           </HBox.margin>
-                        </Label>
-                     </children>
-                  </HBox>
-               </children>
-            </VBox>
          </children>
       </HBox>
    </top>
    <left>
-      <ListView fx:id="categoryList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="categoryList" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin></ListView>
    </left>
    <bottom>
       <VBox BorderPane.alignment="CENTER">
@@ -137,13 +120,20 @@
             </HBox>
             <HBox>
                <children>
-                  <Label text="Label" />
+                  <Label>
+                     <HBox.margin>
+                        <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+                     </HBox.margin></Label>
                </children>
             </HBox>
          </children>
       </VBox>
    </bottom>
    <center>
-      <VBox fx:id="reviewsVBox" maxHeight="170.0" prefHeight="170.0" prefWidth="400.0" BorderPane.alignment="CENTER" />
+      <ListView fx:id="reviewListView" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
+         </BorderPane.margin>
+      </ListView>
    </center>
 </BorderPane>

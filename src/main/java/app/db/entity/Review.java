@@ -1,20 +1,22 @@
 package app.db.entity;
 
-import org.apache.commons.lang.WordUtils;
-
 public class Review {
     private int id;
     private int rank;
     private String description;
-    private String user;
+    private int user;
+    private int bussiness;
+    private String userName;
 
     public Review(){}
 
-    public Review(int id, int rank, String description, String user) {
+    public Review(int id, int rank, String description, int user, int bussiness, String userName) {
         this.id = id;
         this.rank = rank;
         this.description = description;
         this.user = user;
+        this.bussiness = bussiness;
+        this.userName = userName;
     }
 
     public int getId() {
@@ -41,11 +43,24 @@ public class Review {
         this.description = description;
     }
 
-    public String getUser() {
+    public int getUser() {
         return user;
     }
 
-    public void setUser(String user) {
+    public void setUser(int user) {
         this.user = user;
     }
+
+    public int getBussiness() {
+        return bussiness;
+    }
+
+    public void setBussiness(int bussiness) {
+        this.bussiness = bussiness;
+    }
+
+    public String toString() {
+        return this.rank + " : " + this.description + " - " + "by " + this.userName;
+    }
+
 }

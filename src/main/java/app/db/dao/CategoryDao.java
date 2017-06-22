@@ -1,7 +1,9 @@
 package app.db.dao;
 
 import app.db.DbHandler;
+import app.db.entity.Business;
 import app.db.entity.Category;
+import app.db.entity.CategoryCount;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -54,6 +56,43 @@ public class CategoryDao {
             System.err.println(ex);
         }
         return categories;
+    }
+
+    public static List<CategoryCount> getSummary(List<Integer> bussiness) {
+        List<CategoryCount> count = new ArrayList<CategoryCount>();
+        try {
+            StringBuilder builder = new StringBuilder();
+
+            for (int i = 0; i < bussiness.size(); i++) {
+                builder.append("?,");
+            }
+
+            String query = "select count(category.id) as count, category.name as category " +
+                    "from bussiness, category, bussiness_category " +
+                    "where bussiness.id = bussiness_category.bussiness and category.id = bussiness_category.category and bussiness.id in (" +
+                    builder.deleteCharAt(builder.length() - 1).toString() + ") " +
+                    "group by category.id";
+
+            Connection conn = DbHandler.connect();
+            PreparedStatement st = conn.prepareStatement(query);
+
+            int index = 1;
+            for (Integer b : bussiness) {
+                st.setInt(index++, b);
+            }
+
+            ResultSet rs = st.executeQuery();
+
+            while (rs.next()) {
+                count.add(new CategoryCount(rs.getInt("count"), rs.getString("category")));
+            }
+
+            rs.close();
+            conn.close();
+        } catch (Exception ex){
+            System.err.println(ex);
+        }
+        return count;
     }
 
 

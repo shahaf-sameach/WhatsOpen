@@ -7,33 +7,50 @@ import app.db.dao.BussinessDao;
 import app.db.dao.CategoryDao;
 import app.db.entity.Business;
 import app.db.entity.Category;
+import app.db.entity.CategoryCount;
+import app.db.entity.User;
+import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.PriorityQueue;
 
-public class MainViewController {
+public class SearchController {
 
-    public Label topLable;
-    public Label statusLable;
-    public TextField searchField;
-    public Button searchButton;
-    public ListView<Business> mainList;
-    public ListView<Category> categoriesList;
+    @FXML
+    private Label topLable, statusLable;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private ListView<Business> mainList;
+    @FXML
+    private ListView<Category> categoriesList;
+    @FXML
+    private ComboBox<String> radiusComboBox;
+    @FXML
+    private TextArea summaryTextArea;
+
     private BusinessView businessView = new BusinessView();
+    private User user;
 
     public void initialize() {
-        topLable.setText("Hello " + "username");
+        topLable.setText("");
         statusLable.setText("Ready");
-        CategoryDao d = new CategoryDao();
         try {
-            List<Category> categories = d.getAll();
+            List<Category> categories = CategoryDao.getAll();
             categoriesList.getItems().setAll(categories);
             categoriesList.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
         } catch (Exception ex) {
             System.err.println(ex);
         }
+
+        radiusComboBox.getItems().addAll("10km","15km","20km","25km","30km");
+        radiusComboBox.getSelectionModel().select(1);
+        searchField.setText("המאבק 61 גבעתיים");
     }
 
     public void searchButtonclicked(){
@@ -42,25 +59,40 @@ public class MainViewController {
         mainList.getItems().clear();
         try {
             String address = searchField.getText();
-            address = "המאבק 61 גבעתיים";
             GeoPos pos = GeoApi.getGeoPos(address);
-            int radius = 10;
+            int radius = Integer.parseInt(radiusComboBox.getSelectionModel().getSelectedItem().substring(0,2));
             BoundingBox box = new BoundingBox(pos, radius);
             List<Category> categories = categoriesList.getSelectionModel().getSelectedItems();
             List<Business> businesses = BussinessDao.get(categories, box.getMinLat(), box.getMaxLat(), box.getMinLng(), box.getMaxLng());
-            System.out.println("found " + businesses.size() + " business");
             PriorityQueue<Business> queue = new PriorityQueue<Business>();
+            List<Integer> bussinessId = new ArrayList<Integer>();
 
             for (Business bb : businesses) {
                 bb.setDistance(pos);
-                if (bb.getDistance() / 1000 <= radius)
+                if (bb.getDistance() / 1000 <= radius) {
+                    bussinessId.add(bb.getId());
                     queue.add(bb);
+                }
             }
+
+            summaryTextArea.setText("Found " + queue.size() + " business");
 
             while (!queue.isEmpty()) {
                 Business obj = queue.poll();
                 mainList.getItems().add(obj);
             }
+
+            List<CategoryCount> count = CategoryDao.getSummary(bussinessId);
+
+            if (count.size() > 0) {
+                String summary = "";
+                for (CategoryCount c : count){
+                    summary = summary + c.getCount() + " in " + c.getCategory() + " - ";
+                }
+                summary = summaryTextArea.getText() + " :\n" + summary.substring(0,summary.length() - 1);
+                summaryTextArea.setText(summary);
+            }
+
             statusLable.setText("Ready");
         }catch (Exception ex){
             System.err.println(ex);
@@ -74,12 +106,16 @@ public class MainViewController {
         if (click.getClickCount() == 2) {
             Business currentItemSelected = mainList.getSelectionModel().getSelectedItem();
             try {
-                businessView.display(currentItemSelected);
+                businessView.display(user, currentItemSelected);
             } catch (Exception ex) {
                 ex.printStackTrace();
             }
-
         }
+    }
+
+    public void setUser(User user){
+        this.user = user;
+        topLable.setText("Hello " + user.getUserName());
     }
 
 }
