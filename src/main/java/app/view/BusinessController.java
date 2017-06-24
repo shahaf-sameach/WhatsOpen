@@ -9,6 +9,8 @@ import app.db.entity.User;
 
 import com.google.maps.model.PlaceDetails;
 import com.sun.org.apache.regexp.internal.RE;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -52,6 +54,20 @@ public class BusinessController {
         rankLabel.setText(String.format("%.1f",bussiness.getRank()) + " out of " + bussiness.getReviewers() + " reviewers");
         categoryList.getItems().setAll(CategoryDao.get(bussiness.getId()));
 
+        reloadReviews();
+
+    }
+
+    public void okButtonClicked(){
+        try {
+            reviewView.display(user, bussiness, userReview);
+            reloadReviews();
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    private void reloadReviews() {
         List<Review> reviews = ReviewDao.getByBusiness(bussiness.getId());
         userReview = null;
         for(Review review : reviews){
@@ -66,14 +82,6 @@ public class BusinessController {
             okButton.setText("Modify");
         else
             okButton.setText("Add");
-    }
-
-    public void okButtonClicked(){
-        try {
-            reviewView.display(user, bussiness, userReview);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
     }
 
     public void cancelButtonClicked(){
