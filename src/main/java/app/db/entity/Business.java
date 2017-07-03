@@ -1,6 +1,6 @@
 package app.db.entity;
 
-import app.GeoPos;
+import app.geo.GeoPos;
 
 public class Business implements Comparable<Business> {
     private int id;

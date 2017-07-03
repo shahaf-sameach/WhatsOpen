@@ -12,36 +12,36 @@ public class LoginViewController {
     @FXML
     private Label infoLabel;
     @FXML
-    private TextField userNameTextField, passwordTextField;
+    private TextField userNameTextField;
     @FXML
-    private Button loginButton, signUpButton;
+    private PasswordField passField;
 
     private Scene nextScene;
     private SearchController searchController;
 
     public void loginButtonClicked(){
-        String userName = userNameTextField.getText();
-        String password = passwordTextField.getText();
+        String userName = userNameTextField.getText().toLowerCase();
+        String password = passField.getText();
 
         User user = UserDao.get(userName, password);
 
         if (user != null){
             switchScene(user);
         } else {
-            infoLabel.setText("Wrong user name or password");
+            infoLabel.setText("Wrong username or password");
         }
     }
 
     public void signUpButtonClicked(){
-        String userName = userNameTextField.getText();
-        String password = passwordTextField.getText();
+        String userName = userNameTextField.getText().toLowerCase();
+        String password = passField.getText();
 
         User user = UserDao.create(userName, password);
 
         if (user != null){
             switchScene(user);
         } else {
-            infoLabel.setText("user name already exist");
+            infoLabel.setText("username already exist");
         }
     }
 

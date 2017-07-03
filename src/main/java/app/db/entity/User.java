@@ -13,6 +13,11 @@ public class User {
         this.password = password;
     }
 
+    public User(int id, String userName) {
+        this.id = id;
+        this.userName = userName;
+    }
+
     public int getId() {
         return id;
     }
@@ -35,5 +40,12 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public boolean equals(Object o){
+        if(! (o instanceof User)) return false;
+
+        User u = (User) o;
+        return u.getId() == this.id;
     }
 }

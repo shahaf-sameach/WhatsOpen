@@ -1,4 +1,4 @@
-package app;
+package app.geo;
 
 public class BoundingBox {
     private final double earthRadius = 6378.1;
@@ -6,24 +6,6 @@ public class BoundingBox {
     private double maxLng;
     private double minLat;
     private double maxLat;
-
-    public void getBounds(double lat, double lng, int distance){
-        double radDist = distance / earthRadius;
-        double radLat = degToRad(lat);
-        double radLng = degToRad(lng);
-
-        double minLat = radLat - radDist;
-        double maxLat = radLat + radDist;
-
-        double deltaLng = Math.asin(Math.sin(radDist) / Math.cos(radLat));
-        double minLng = radLng - deltaLng;
-        double maxLng = radLng + deltaLng;
-
-        minLng = radToDeg(minLng);
-        minLat = radToDeg(minLat);
-        maxLng = radToDeg(maxLng);
-        maxLat = radToDeg(maxLat);
-    }
 
     public BoundingBox(GeoPos pos, int distance){
         double radDist = distance / earthRadius;

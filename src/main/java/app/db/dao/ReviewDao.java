@@ -13,7 +13,7 @@ public class ReviewDao {
     public static List<Review> getByBusiness(int business_id) {
         List<Review> reviews = new ArrayList<Review>();
         try {
-            String query = "select review.id, description, rank, review.user, review.bussiness, user.username " +
+            String query = "select review.id, description, rank, review.user, review.bussiness, user.id as user_id, user.username " +
                     "from review, user " +
                     "where review.bussiness = ? and review.user = user.id";
 
@@ -26,12 +26,12 @@ public class ReviewDao {
             ResultSet rs = st.executeQuery();
 
             while (rs.next()) {
+                User user = new User(rs.getInt("user_id"), rs.getString("username"));
                 reviews.add(new Review(rs.getInt("id"),
                         rs.getInt("rank"),
                         rs.getString("description"),
-                        rs.getInt("user"),
-                        rs.getInt("bussiness"),
-                        rs.getString("username")));
+                        user,
+                        rs.getInt("bussiness")));
             }
 
             rs.close();
@@ -55,7 +55,7 @@ public class ReviewDao {
             st.setInt(1, record_id + 1);
             st.setInt(2, review.getRank());
             st.setString(3, review.getDescription());
-            st.setInt(4, review.getUser());
+            st.setInt(4, review.getUser().getId());
             st.setInt(5, review.getBussiness());
 
             if(st.executeUpdate() == 1)

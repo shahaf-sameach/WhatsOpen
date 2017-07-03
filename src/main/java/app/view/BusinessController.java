@@ -7,20 +7,11 @@ import app.db.entity.Category;
 import app.db.entity.Review;
 import app.db.entity.User;
 
-import com.google.maps.model.PlaceDetails;
-import com.sun.org.apache.regexp.internal.RE;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
 
 import java.util.List;
@@ -71,8 +62,9 @@ public class BusinessController {
         List<Review> reviews = ReviewDao.getByBusiness(bussiness.getId());
         userReview = null;
         for(Review review : reviews){
-            if (review.getUser() == user.getId()) {
+            if (review.getUser().equals(user)) {
                 userReview = review;
+                break;
             }
         }
 
@@ -95,10 +87,6 @@ public class BusinessController {
 
     public void setUser(User user) {
         this.user = user;
-    }
-
-    public void urlLinkClicked(){
-        System.out.println("url clicked");
     }
 
 }

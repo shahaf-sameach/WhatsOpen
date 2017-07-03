@@ -1,6 +1,6 @@
 from pony.orm import db_session
 from database import *
-from api import nearbysearch, place_details
+from settings import *
 import random
 from loremipsum import get_sentences
 

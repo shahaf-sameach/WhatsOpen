@@ -1,7 +1,7 @@
 package app.view;
 
-import app.BoundingBox;
-import app.GeoPos;
+import app.geo.BoundingBox;
+import app.geo.GeoPos;
 import app.api.GeoApi;
 import app.db.dao.BussinessDao;
 import app.db.dao.CategoryDao;

@@ -1,47 +1,38 @@
 from pony.orm import db_session
 from database import *
 from api import nearbysearch, place_details
+from settings import *
 import sys
 
 if __name__ == "__main__" :
-  # Ashdod = [31.801447, 34.643497]
-  # Bat_Yam = [32.017136, 34.745441]
-  # Tel_Aviv = [32.109333, 34.855499]
-  # Haifa = [32.794044, 34.989571]
-  # Herzliya = [32.166313, 34.843311]
-  # Rehovot = [31.894756, 34.809322]
-  # Jerusalem = [31.771959, 35.217018]
-  
-  # cities = [Ashdod, Bat_Yam, Tel_Aviv, Haifa, Herzliya, Rehovot, Jerusalem]
+  # find new places near the cities
+  with db_session:
+    for city in cities:
+      response = nearbysearch(*city)
+      for res in response['results']:
+        lat = res['geometry']['location']['lat']
+        lng = res['geometry']['location']['lng']
+        place_id = res['place_id']
+        p = Place.get(place_id=place_id)
+        if p is None:
+          p = Place(place_id = place_id, lat=lat, lng=lng)
 
-  # # find new places near the cities
-  # with db_session:
-  #   for city in cities:
-  #     response = nearbysearch(*city)
-  #     for res in response['results']:
-  #       lat = res['geometry']['location']['lat']
-  #       lng = res['geometry']['location']['lng']
-  #       place_id = res['place_id']
-  #       p = Place.get(place_id=place_id)
-  #       if p is None:
-  #         p = Place(place_id = place_id, lat=lat, lng=lng)
+  # find new places near existing places
+  with db_session:
+    places = select(p for p in Place if p.nearby_done == False)[:]
+    print "working on %s places" %len(places)
+    for indx, place in enumerate(places):
+      print "working on %s out of %s" %(indx, len(places))
+      response = nearbysearch(place.lat, place.lng)
+      for res in response['results']:
+        lat = res['geometry']['location']['lat']
+        lng = res['geometry']['location']['lng']
+        place_id = res['place_id']
+        p = Place.get(place_id=place_id)
+        if p is None:
+          p = Place(place_id = place_id, lat=lat, lng=lng)
 
-  # # find new places near existing places
-  # with db_session:
-  #   places = select(p for p in Place if p.nearby_done == False)[:]
-  #   print "working on %s places" %len(places)
-  #   for indx, place in enumerate(places):
-  #     print "working on %s out of %s" %(indx, len(places))
-  #     response = nearbysearch(place.lat, place.lng)
-  #     for res in response['results']:
-  #       lat = res['geometry']['location']['lat']
-  #       lng = res['geometry']['location']['lng']
-  #       place_id = res['place_id']
-  #       p = Place.get(place_id=place_id)
-  #       if p is None:
-  #         p = Place(place_id = place_id, lat=lat, lng=lng)
-
-  #     place.set(nearby_done=True)
+      place.set(nearby_done=True)
 
 
   # sys.exit()

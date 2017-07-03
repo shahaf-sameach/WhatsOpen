@@ -27,7 +27,7 @@
     <bottom>
         <HBox prefHeight="0.0" prefWidth="709.0" BorderPane.alignment="CENTER">
             <children>
-                <Label fx:id="statusLable" prefHeight="21.0" prefWidth="81.0" />
+                <Label fx:id="statusLable" prefHeight="17.0" prefWidth="441.0" />
             </children>
         </HBox>
     </bottom>
@@ -66,19 +66,19 @@
             </Slider>
             <HBox alignment="CENTER_RIGHT" prefHeight="52.0" prefWidth="704.0">
                <children>
-                  <Button fx:id="deleteButton" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete">
+                  <Button fx:id="deleteButton" maxWidth="61.0" minWidth="61.0" mnemonicParsing="false" onAction="#deleteButtonClicked" text="Delete">
                      <HBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </HBox.margin>
                   </Button>
                   <Region prefHeight="43.0" prefWidth="185.0" />
-                  <Button fx:id="addButton" alignment="TOP_CENTER" mnemonicParsing="false" onAction="#addButtonClicked" text="Modiy">
+                  <Button fx:id="addButton" alignment="TOP_CENTER" maxWidth="61.0" minWidth="61.0" mnemonicParsing="false" onAction="#addButtonClicked" text="Modiy">
                      <HBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </HBox.margin>
                   </Button>
                   <Region prefHeight="43.0" prefWidth="10.0" />
-                  <Button fx:id="cancelButton" alignment="TOP_CENTER" contentDisplay="CENTER" minWidth="56.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" textAlignment="CENTER">
+                  <Button fx:id="cancelButton" alignment="TOP_CENTER" contentDisplay="CENTER" maxWidth="61.0" minWidth="61.0" mnemonicParsing="false" onAction="#cancelButtonClicked" text="Cancel" textAlignment="CENTER">
                      <HBox.margin>
                         <Insets bottom="8.0" left="8.0" right="8.0" top="8.0" />
                      </HBox.margin>

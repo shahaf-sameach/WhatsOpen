@@ -1,30 +1,20 @@
 package app.view;
 
-import app.db.dao.CategoryDao;
 import app.db.dao.ReviewDao;
 import app.db.entity.Business;
-import app.db.entity.Category;
 import app.db.entity.Review;
 import app.db.entity.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.Cursor;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontPosture;
 import javafx.stage.Stage;
-
-import java.util.List;
 
 
 public class ReviewController {
 
     @FXML
-    private Label topLabel, charNumLabel, statusLable;
+    private Label charNumLabel, statusLable;
     @FXML
     private TextArea reviewTextArea;
     @FXML
@@ -41,7 +31,6 @@ public class ReviewController {
         rankSlider.valueProperty().addListener(new ChangeListener<Number>() {
             public void changed(ObservableValue<? extends Number> observable,
                                 Number oldValue, Number newValue) {
-
                 rankSlider.setValue(newValue.intValue());
             }
         });
@@ -60,15 +49,14 @@ public class ReviewController {
             rankSlider.setValue(review.getRank());
         } else {
             addButton.setText("Add");
-            cancelButton.setVisible(false);
-            cancelButton.setDisable(true);
+            deleteButton.setVisible(false);
+            deleteButton.setDisable(true);
         }
     }
 
     public void addButtonClicked(){
-        boolean success;
         if (addButton.getText().equals("Add")){
-            review = new Review(1, (int)rankSlider.getValue(), getDescription(), user.getId(), bussiness.getId(), null);
+            review = new Review(1, (int)rankSlider.getValue(), getDescription(), user, bussiness.getId());
             review = ReviewDao.add(review);
         } else {
             review.setRank((int)rankSlider.getValue());
@@ -78,16 +66,17 @@ public class ReviewController {
 
         if (review != null) {
             statusLable.setText("Successfully Update DB");
-            addButton.setText("Modify");
         } else {
             statusLable.setText("An Error Occurred");
         }
-
-        deleteButton.setVisible(true);
-        deleteButton.setDisable(false);
+        closeWindow();
     }
 
     public void cancelButtonClicked(){
+        closeWindow();
+    }
+
+    private void closeWindow(){
         Stage stage = (Stage) cancelButton.getScene().getWindow();
         stage.close();
     }

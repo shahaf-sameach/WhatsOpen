@@ -1,4 +1,4 @@
-package app;
+package app.geo;
 
 public class GeoPos {
     private double lat;

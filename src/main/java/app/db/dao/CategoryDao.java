@@ -1,7 +1,6 @@
 package app.db.dao;
 
 import app.db.DbHandler;
-import app.db.entity.Business;
 import app.db.entity.Category;
 import app.db.entity.CategoryCount;
 

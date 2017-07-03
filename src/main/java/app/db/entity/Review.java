@@ -4,19 +4,17 @@ public class Review {
     private int id;
     private int rank;
     private String description;
-    private int user;
+    private User user;
     private int bussiness;
-    private String userName;
 
     public Review(){}
 
-    public Review(int id, int rank, String description, int user, int bussiness, String userName) {
+    public Review(int id, int rank, String description, User user, int bussiness) {
         this.id = id;
         this.rank = rank;
         this.description = description;
         this.user = user;
         this.bussiness = bussiness;
-        this.userName = userName;
     }
 
     public int getId() {
@@ -43,11 +41,11 @@ public class Review {
         this.description = description;
     }
 
-    public int getUser() {
+    public User getUser() {
         return user;
     }
 
-    public void setUser(int user) {
+    public void setUser(User user) {
         this.user = user;
     }
 
@@ -60,7 +58,7 @@ public class Review {
     }
 
     public String toString() {
-        return this.rank + " : " + this.description + " - " + "by " + this.userName;
+        return this.rank + " : " + this.description + " - " + "by " + this.user.getUserName();
     }
 
 }
