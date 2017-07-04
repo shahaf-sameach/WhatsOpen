@@ -1,4 +1,4 @@
-package app.view;
+package app.view.controller;
 
 import app.db.dao.CategoryDao;
 import app.db.dao.ReviewDao;
@@ -7,6 +7,7 @@ import app.db.entity.Category;
 import app.db.entity.Review;
 import app.db.entity.User;
 
+import app.view.ReviewView;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Hyperlink;
@@ -42,11 +43,9 @@ public class BusinessController {
         posLabel.setText("(" + Double.toString(bussiness.getPos().getLat()) + "," + Double.toString(bussiness.getPos().getLng()) + ")");
         cityLabel.setText(bussiness.getCity());
         urlLink.setText(bussiness.getUrl());
-        rankLabel.setText(String.format("%.1f",bussiness.getRank()) + " out of " + bussiness.getReviewers() + " reviewers");
         categoryList.getItems().setAll(CategoryDao.get(bussiness.getId()));
 
         reloadReviews();
-
     }
 
     public void okButtonClicked(){
@@ -61,12 +60,17 @@ public class BusinessController {
     private void reloadReviews() {
         List<Review> reviews = ReviewDao.getByBusiness(bussiness.getId());
         userReview = null;
+        double rank = 0.0;
         for(Review review : reviews){
             if (review.getUser().equals(user)) {
                 userReview = review;
-                break;
             }
+            rank = rank + (double) review.getRank();
         }
+
+        bussiness.setReviewers(reviews.size());
+        bussiness.setRank(rank / reviews.size());
+        refreshRankLabel();
 
         reviewListView.getItems().setAll(reviews);
 
@@ -87,6 +91,10 @@ public class BusinessController {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    private void refreshRankLabel(){
+        rankLabel.setText(String.format("%.1f",bussiness.getRank()) + " out of " + bussiness.getReviewers() + " reviewers");
     }
 
 }

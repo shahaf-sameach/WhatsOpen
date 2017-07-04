@@ -2,6 +2,7 @@ package app.view;
 
 import app.db.entity.Business;
 import app.db.entity.User;
+import app.view.controller.BusinessController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

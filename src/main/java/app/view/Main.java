@@ -1,5 +1,7 @@
 package app.view;
 
+import app.view.controller.LoginViewController;
+import app.view.controller.SearchController;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;

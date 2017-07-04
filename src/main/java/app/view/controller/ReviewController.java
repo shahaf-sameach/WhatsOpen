@@ -1,4 +1,4 @@
-package app.view;
+package app.view.controller;
 
 import app.db.dao.ReviewDao;
 import app.db.entity.Business;
@@ -87,11 +87,7 @@ public class ReviewController {
         else
             statusLable.setText("An Error Occurred");
 
-        reviewTextArea.setText("");
-        rankSlider.setValue(3);
-        deleteButton.setDisable(true);
-        deleteButton.setVisible(false);
-        addButton.setText("Add");
+        closeWindow();
     }
 
     public void setBussiness(Business bussiness) {

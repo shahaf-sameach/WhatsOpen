@@ -10,28 +10,6 @@ import java.util.List;
 
 public class BussinessDao {
 
-    public static List<String> getAll()  {
-        List<String> categories = new ArrayList<String>();
-        try {
-            Connection conn = DbHandler.connect();
-
-            Statement st = conn.createStatement();
-            ResultSet rs = st.executeQuery("select name from bussiness");
-
-
-            while (rs.next()) {
-                String record = rs.getString("name");
-                categories.add(record);
-            }
-
-            rs.close();
-            conn.close();
-        } catch (Exception ex){
-            System.err.println(ex);
-        }
-        return categories;
-    }
-
     public static List<Business> get(List<Category> categories, double minLat, double maxLat, double minLng, double maxLng) {
         List<Business> businesses = new ArrayList<Business>();
 

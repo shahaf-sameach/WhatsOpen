@@ -86,7 +86,11 @@ public class Business implements Comparable<Business> {
 
     public double getRank() { return this.rank; }
 
+    public void setRank(double rank) { this.rank = rank; }
+
     public int getReviewers() { return this.reviewers; }
+
+    public void setReviewers(int reviewers) {this.reviewers = reviewers; }
 
     public String toString() {
         String str = String.format("%.1f",this.getDistance() / 1000) + "km " + padString(this.getName(), 20) + "  " + padString(this.getAddress(), 50)  + " " + String.format("%.1f",this.getRank()) + "/" + this.getReviewers();

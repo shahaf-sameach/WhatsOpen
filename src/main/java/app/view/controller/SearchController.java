@@ -1,4 +1,4 @@
-package app.view;
+package app.view.controller;
 
 import app.geo.BoundingBox;
 import app.geo.GeoPos;
@@ -9,6 +9,7 @@ import app.db.entity.Business;
 import app.db.entity.Category;
 import app.db.entity.CategoryCount;
 import app.db.entity.User;
+import app.view.BusinessView;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;

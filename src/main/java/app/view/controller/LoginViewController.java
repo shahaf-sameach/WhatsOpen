@@ -1,4 +1,4 @@
-package app.view;
+package app.view.controller;
 
 import app.db.dao.UserDao;
 import app.db.entity.User;
