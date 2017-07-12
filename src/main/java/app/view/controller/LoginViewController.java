@@ -6,6 +6,7 @@ import javafx.fxml.FXML;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
+import org.apache.commons.codec.digest.DigestUtils;
 
 public class LoginViewController {
 
@@ -21,9 +22,13 @@ public class LoginViewController {
 
     public void loginButtonClicked(){
         String userName = userNameTextField.getText().toLowerCase();
-        String password = passField.getText();
 
-        User user = UserDao.get(userName, password);
+        if (isPasswordEmpty()){
+            infoLabel.setText("Password cannot be empty");
+            return;
+        }
+
+        User user = UserDao.get(userName, getHashPassword());
 
         if (user != null){
             switchScene(user);
@@ -34,9 +39,13 @@ public class LoginViewController {
 
     public void signUpButtonClicked(){
         String userName = userNameTextField.getText().toLowerCase();
-        String password = passField.getText();
 
-        User user = UserDao.create(userName, password);
+        if (isPasswordEmpty()){
+            infoLabel.setText("Password cannot be empty");
+            return;
+        }
+        
+        User user = UserDao.create(userName, getHashPassword());
 
         if (user != null){
             switchScene(user);
@@ -49,6 +58,14 @@ public class LoginViewController {
         searchController.setUser(user);
         Stage primaryStage = (Stage) infoLabel.getScene().getWindow();
         primaryStage.setScene(nextScene);
+    }
+
+    private String getHashPassword() {
+        return DigestUtils.md5Hex(passField.getText());
+    }
+
+    private boolean isPasswordEmpty(){
+        return passField.getText().equals("");
     }
 
     public void setNextScene(Scene scene){
