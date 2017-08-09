@@ -4,10 +4,7 @@ import app.config.ApiConfiguration;
 import app.geo.GeoPos;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
-import com.google.maps.errors.ApiException;
 import com.google.maps.model.GeocodingResult;
-
-import java.io.IOException;
 
 public class GeoApi {
 
@@ -15,17 +12,13 @@ public class GeoApi {
         GeoPos pos = new GeoPos(32.0691989, 34.8430876);
         GeoApiContext context =  new GeoApiContext().setApiKey(ApiConfiguration.API_TOKEN);
 
-        GeocodingResult[] results = new GeocodingResult[0];
         try {
-            results = GeocodingApi.geocode(context, address).await();
+            GeocodingResult[] results = GeocodingApi.geocode(context, address).await();
             pos = new GeoPos(results[0].geometry.location.lat, results[0].geometry.location.lng);
-        } catch (ApiException e) {
-            e.printStackTrace();
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
+
         return pos;
     }
 }
