@@ -11,7 +11,7 @@ public class DbHandler {
     public static Connection connect() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            return DriverManager.getConnection(DatabaseConfiguration.URL, DatabaseConfiguration.USERNAME, DatabaseConfiguration.PASSWORD);
+            return DriverManager.getConnection(DatabaseConfiguration.getUrl(), DatabaseConfiguration.getUsername(), DatabaseConfiguration.getPassword());
         } catch (SQLException e) {
             e.printStackTrace();
             return null;

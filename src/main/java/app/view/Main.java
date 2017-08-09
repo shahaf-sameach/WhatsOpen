@@ -1,5 +1,6 @@
 package app.view;
 
+import app.config.DatabaseConfiguration;
 import app.view.controller.LoginViewController;
 import app.view.controller.SearchController;
 import javafx.application.Application;
@@ -32,6 +33,16 @@ public class Main extends Application {
 
 
     public static void main(String[] args) {
+        if (args.length == 3) {
+            DatabaseConfiguration.setConf(args[0], args[1], args[2]);
+        } else if (args.length == 0){
+            //do nothing
+        } else {
+            System.out.println("Error insering run arguments");
+            System.out.println("please use the following: app.jar <db_url> <username> <password> | empty");
+            return;
+        }
+
         launch(args);
     }
 }
