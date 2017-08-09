@@ -1,5 +1,6 @@
 package app.api;
 
+import app.config.ApiConfiguration;
 import app.geo.GeoPos;
 import com.google.maps.GeoApiContext;
 import com.google.maps.GeocodingApi;
@@ -10,11 +11,9 @@ import java.io.IOException;
 
 public class GeoApi {
 
-    private static final String API_TOKEN = "AIzaSyBoZvKz08_259aboWBJsDdX0QoTNO5QN6U";
-
     public static GeoPos getGeoPos(String address){
         GeoPos pos = new GeoPos(32.0691989, 34.8430876);
-        GeoApiContext context =  new GeoApiContext().setApiKey(API_TOKEN);
+        GeoApiContext context =  new GeoApiContext().setApiKey(ApiConfiguration.API_TOKEN);
 
         GeocodingResult[] results = new GeocodingResult[0];
         try {

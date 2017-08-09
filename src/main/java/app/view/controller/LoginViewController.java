@@ -44,7 +44,7 @@ public class LoginViewController {
             infoLabel.setText("Password cannot be empty");
             return;
         }
-        
+
         User user = UserDao.create(userName, getHashPassword());
 
         if (user != null){
@@ -52,6 +52,14 @@ public class LoginViewController {
         } else {
             infoLabel.setText("username already exist");
         }
+    }
+
+    public void setNextScene(Scene scene){
+        this.nextScene = scene;
+    }
+
+    public void setController(SearchController controller) {
+        this.searchController = controller;
     }
 
     private void switchScene(User user){
@@ -66,14 +74,6 @@ public class LoginViewController {
 
     private boolean isPasswordEmpty(){
         return passField.getText().equals("");
-    }
-
-    public void setNextScene(Scene scene){
-        this.nextScene = scene;
-    }
-
-    public void setController(SearchController controller) {
-        this.searchController = controller;
     }
 
 }
