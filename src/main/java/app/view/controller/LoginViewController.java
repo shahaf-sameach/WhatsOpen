@@ -1,5 +1,6 @@
 package app.view.controller;
 
+import app.constants.UserStatus;
 import app.db.dao.UserDao;
 import app.db.entity.User;
 import javafx.fxml.FXML;
@@ -20,6 +21,8 @@ public class LoginViewController {
     private Scene nextScene;
     private SearchController searchController;
 
+    private UserStatus userStatus = UserStatus.NewUser;
+
     public void loginButtonClicked(){
         String userName = userNameTextField.getText().toLowerCase();
 
@@ -31,6 +34,7 @@ public class LoginViewController {
         User user = UserDao.get(userName, getHashPassword());
 
         if (user != null){
+            userStatus = UserStatus.ReturnUser;
             switchScene(user);
         } else {
             infoLabel.setText("Wrong username or password");
@@ -63,7 +67,7 @@ public class LoginViewController {
     }
 
     private void switchScene(User user){
-        searchController.setUser(user);
+        searchController.setUser(user, userStatus);
         Stage primaryStage = (Stage) infoLabel.getScene().getWindow();
         primaryStage.setScene(nextScene);
     }

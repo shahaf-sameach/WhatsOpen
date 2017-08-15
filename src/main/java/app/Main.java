@@ -1,4 +1,4 @@
-package app.view;
+package app;
 
 import app.config.DatabaseConfiguration;
 import app.view.controller.LoginViewController;

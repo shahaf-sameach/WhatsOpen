@@ -1,5 +1,6 @@
 package app.view.controller;
 
+import app.constants.UserStatus;
 import app.geo.BoundingBox;
 import app.geo.GeoPos;
 import app.api.GeoApi;
@@ -114,9 +115,12 @@ public class SearchController {
         }
     }
 
-    public void setUser(User user){
+    public void setUser(User user, UserStatus status){
         this.user = user;
-        topLable.setText("Hello " + user.getUserName());
+        if (status == UserStatus.NewUser)
+            topLable.setText("Hello " + user.getUserName());
+        else
+            topLable.setText("Welcom back " + user.getUserName());
     }
 
 }
