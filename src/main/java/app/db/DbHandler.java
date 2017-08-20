@@ -10,12 +10,10 @@ public class DbHandler {
 
     public static Connection connect() {
         try {
-            Class.forName("com.mysql.cj.jdbc.Driver");
+            Class.forName("com.mysql.jdbc.Driver");
             return DriverManager.getConnection(DatabaseConfiguration.getUrl(), DatabaseConfiguration.getUsername(), DatabaseConfiguration.getPassword());
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return null;
-        } catch (ClassNotFoundException e) {
+        } catch (Exception e) {
+            System.err.println("Error connecting to the database:");
             System.err.println(e);
             return null;
         }

@@ -77,7 +77,7 @@ public class SearchController {
                 }
             }
 
-            summaryTextArea.setText("Found " + queue.size() + " business");
+            summaryTextArea.setText("Found total of " + queue.size() + " businesses");
 
             while (!queue.isEmpty()) {
                 Business obj = queue.poll();
@@ -89,9 +89,9 @@ public class SearchController {
             if (count.size() > 0) {
                 String summary = "";
                 for (CategoryCount c : count){
-                    summary = summary + c.getCount() + " in " + c.getCategory() + " - ";
+                    summary = summary + c.getCategory() + "(" + c.getCount() + ")" + " | ";
                 }
-                summary = summaryTextArea.getText() + " :\n" + summary.substring(0,summary.length() - 1);
+                summary = summaryTextArea.getText() + " :\n" + summary.substring(0,summary.length() - 2);
                 summaryTextArea.setText(summary);
             }
 

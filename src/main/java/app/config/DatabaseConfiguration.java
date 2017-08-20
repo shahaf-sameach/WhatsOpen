@@ -2,9 +2,9 @@ package app.config;
 
 public class DatabaseConfiguration {
 
-    private static String URL = "jdbc:mysql://localhost/whatsopen";
-    private static String USERNAME = "whatsopen";
-    private static String PASSWORD = "1234";
+    private static String URL = "jdbc:mysql://localhost/dmw04db";
+    private static String USERNAME = "dmw04";
+    private static String PASSWORD = "Df26q";
 
     public static void setConf(String url, String username, String password){
         if (url != null)
